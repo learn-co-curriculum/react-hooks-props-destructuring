@@ -50,7 +50,7 @@ are passed from their parents.
 To pass props to a component, you add them as attributes when you render them:
 
 ```js
-const movieTitle = "Max Max"
+const movieTitle = "Mad Max"
 <MovieCard title={movieTitle} />
 ```
 
@@ -68,7 +68,7 @@ Armed with that knowledge, let's update `MovieCard`s render method to make use o
 
 ```js
 // assuming we are rendering a MovieCard component with the following JSX:
-const title = "Max Max"
+const title = "Mad Max"
 const posterURL = "http://image.tmdb.org/t/p/w342/kqjL17yufvn9OVLyXYpvtyrFfak.jpg"
 const genresArr = ["Action", "Adventure", "Science Fiction", "Thriller"]
 
