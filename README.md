@@ -26,16 +26,14 @@ poster image, and many other attributes (or **prop**-erties!). Let's examine wha
 ###### Hardcoded:
 
 ```js
-class MovieCard extends React.Component {
-  render() {
-    return (
-      <div className="movie-card">
-        <img src="http://image.tmdb.org/t/p/w342/kqjL17yufvn9OVLyXYpvtyrFfak.jpg" alt="Mad Max: Fury Road" />
-        <h2>Mad Max: Fury Road</h2>
-        <small>Genres: Action, Adventure, Science Fiction, Thriller</small>
-      </div>
-    )
-  }
+function MovieCard() {
+  return (
+    <div className="movie-card">
+      <img src="http://image.tmdb.org/t/p/w342/kqjL17yufvn9OVLyXYpvtyrFfak.jpg" alt="Mad Max: Fury Road" />
+      <h2>Mad Max: Fury Road</h2>
+      <small>Genres: Action, Adventure, Science Fiction, Thriller</small>
+    </div>
+  )
 }
 ```
 
@@ -76,16 +74,14 @@ const genresArr = ["Action", "Adventure", "Science Fiction", "Thriller"]
 ```
 
 ```js
-class MovieCard extends React.Component {
-  render() {
-    return (
-      <div className="movie-card">
-        <img src={this.props.posterSrc} alt={this.props.title} />
-        <h2>{this.props.title}</h2>
-        <small>{this.props.genres.join(', ')}</small>
-      </div>
-    )
-  }
+function MovieCard(props) {
+  return (
+    <div className="movie-card">
+      <img src={props.posterSrc} alt={props.title} />
+      <h2>{props.title}</h2>
+      <small>{props.genres.join(', ')}</small>
+    </div>
+  )
 }
 ```
 
@@ -115,16 +111,14 @@ was not provided**. To do this, we add the `defaultProps` property to our
 `MovieCard` class:
 
 ```js
-class MovieCard extends React.Component {
-  render() {
-    return (
-      <div className="movie-card">
-        <img src={this.props.posterSrc} alt={this.props.title} />
-        <h2>{this.props.title}</h2>
-        <small>{this.props.genres.join(', ')}</small>
-      </div>
-    )
-  }
+function MovieCard(props) {
+  return (
+    <div className="movie-card">
+      <img src={props.posterSrc} alt={props.title} />
+      <h2>{props.title}</h2>
+      <small>{props.genres.join(', ')}</small>
+    </div>
+  )
 }
 
 MovieCard.defaultProps = {
