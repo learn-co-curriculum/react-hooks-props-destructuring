@@ -26,7 +26,7 @@ poster image, and many other attributes (or **prop**-erties!). Let's examine wha
 ###### Hardcoded:
 
 ```js
-function MovieCard() {
+function MovieCard {
   return (
     <div className="movie-card">
       <img src="http://image.tmdb.org/t/p/w342/kqjL17yufvn9OVLyXYpvtyrFfak.jpg" alt="Mad Max: Fury Road" />
@@ -88,6 +88,30 @@ function MovieCard(props) {
 Now, does that not look cleaner and more reusable compared to our hard coded
 example or what!?
 
+## Destructuring
+
+Since we know that a React function will only every get called with one argument,
+and that argument will be the **props** object, we can take advantage of a modern
+JavaScript feature called [destructuring][destructuring] to make our component even 
+cleaner:
+
+```jsx
+function MovieCard({ title, posterSrc, genres }) {
+  return (
+    <div className="movie-card">
+      <img src={posterSrc} alt={title} />
+      <h2>{title}</h2>
+      <small>{genres.join(', ')}</small>
+    </div>
+  )
+}
+```
+
+In this example, we're _destructuring_ the props argument in this function, which 
+will have title, posterSrc, and genres as keys. Destructuring allows us to take 
+the keys from the props object and assign them to variables with the same name. That
+way, in our JSX, we don't have to use `props.whatever` everywhere - we can just access
+the value directly!
 
 ## Default values for props
 
@@ -97,7 +121,7 @@ reliable when it comes to the urls of the movie posters.
 
 In this case, we want to make sure our component doesn't render as an utter
 disaster when the data is incomplete. In order to do this, we can use a
-**default prop** to assign a poster url when either a bad one, or none at all,
+**default value** to assign a poster url when either a bad one, or none at all,
 is provided. For this example, let's use the poster for Max Headroom as a
 default, seeing as it is a perfect placeholder:
 
@@ -106,33 +130,29 @@ default, seeing as it is a perfect placeholder:
 </P>
 
 Instead of passing in that default poster image in case we don't have one, we
-can tell our `MovieCard` component to use a default prop **if the `poster` prop
-was not provided**. To do this, we add the `defaultProps` property to our
-`MovieCard` class:
+can tell our `MovieCard` component to use a default value **if the `poster` prop
+was not provided**. To do this, we can add default value to our destructured 
+props:
 
 ```js
-function MovieCard(props) {
+function MovieCard({ title, posterSrc = 'http://i.imgur.com/bJw8ndW.png', genres }) {
   return (
     <div className="movie-card">
-      <img src={props.posterSrc} alt={props.title} />
-      <h2>{props.title}</h2>
-      <small>{props.genres.join(', ')}</small>
+      <img src={posterSrc} alt={title} />
+      <h2>{title}</h2>
+      <small>{genres.join(', ')}</small>
     </div>
   )
-}
-
-MovieCard.defaultProps = {
-  posterSrc: 'http://i.imgur.com/bJw8ndW.png'
 }
 ```
 
 Now, whenever we omit the `posterSrc` prop, or if it's undefined, the
-`MovieCard` component will use this default prop instead. That means we don't
+`MovieCard` component will use this default value instead. That means we don't
 have to worry about not passing in a poster all the time — the component will
 take care of this for us!
 
 
-## Why Use Default Props
+## Why Use Default Values
 
 An alternative way we could have handled bad urls would be to have `MovieCard`'s
 parent component _check_ whether the `posterSrc` was valid/present, and then
@@ -147,6 +167,8 @@ the component that is responsible for rendering the movie information and poster
 to handle missing data.
 
 ## Resources
-- [React Default Prop Values](https://reactjs.org/docs/components-and-props.html#default-prop-values)
+- [Destructuring Objects][destructuring]
 
 <p class='util--hide'>View <a href='https://learn.co/lessons/react-props-readme'>Props</a> on Learn.co and start learning to code for free.</p>
+
+[destructuring]: https://ui.dev/object-array-destructuring/
