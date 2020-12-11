@@ -1,27 +1,29 @@
-# React props
+# Props Destructuring and Default Values
 
 ## Overview
 
 We'll cover props in further detail and explore how they help us make our
-components more dynamic and reusable. 
-
+components more dynamic and reusable. We'll also talk about _destructuring_ and
+how to give our props _default values_.
 
 ## Objectives
 
 1. Explain how props make our components more dynamic and reusable
 2. Pass props to a component by adding them as attributes when you render them
-2. Declare default prop values in React
-3. Render a component with props and default props
+3. Use destructuring to access props more easily
+4. Declare default values for destructured props
+5. Render a component with props and default props
 
-
-## What are props?
+## Reviewing What We Know
 
 Props allow us to pass values into our components. These values can be anything:
 strings, objects (including arrays and functions), and so on. They give us the
 opportunity to make our components more dynamic, and a **lot more** reusable.
 
 For example, say we have a `<MovieCard />` component. A movie has a title, a
-poster image, and many other attributes (or **prop**-erties!). Let's examine what this `<MovieCard />` component would look like with _hardcoded_ data vs. dynamic _prop_ data:
+poster image, and many other attributes (or **prop**-erties!). Let's examine
+what this `<MovieCard />` component would look like with _hardcoded_ data vs.
+dynamic _prop_ data:
 
 ###### Hardcoded:
 
@@ -37,8 +39,7 @@ function MovieCard {
 }
 ```
 
-
-## Passing in props
+### Passing in props
 
 Mad Max: Fury Road is a ridiculously good movie, but what if we want to render a
 movie card for another movie? Do we just write another component? No, that would
@@ -79,20 +80,20 @@ function MovieCard(props) {
     <div className="movie-card">
       <img src={props.posterSrc} alt={props.title} />
       <h2>{props.title}</h2>
-      <small>{props.genres.join(', ')}</small>
+      <small>{props.genres.join(", ")}</small>
     </div>
-  )
+  );
 }
 ```
 
 Now, does that not look cleaner and more reusable compared to our hard coded
 example or what!?
 
-## Destructuring
+## Destructuring Props
 
 Since we know that a React function will only every get called with one argument,
 and that argument will be the **props** object, we can take advantage of a modern
-JavaScript feature called [destructuring][destructuring] to make our component even 
+JavaScript feature called [destructuring][destructuring] to make our component even
 cleaner:
 
 ```jsx
@@ -101,23 +102,118 @@ function MovieCard({ title, posterSrc, genres }) {
     <div className="movie-card">
       <img src={posterSrc} alt={title} />
       <h2>{title}</h2>
-      <small>{genres.join(', ')}</small>
+      <small>{genres.join(", ")}</small>
     </div>
-  )
+  );
 }
 ```
 
-In this example, we're _destructuring_ the props argument in this function, which 
-will have title, posterSrc, and genres as keys. Destructuring allows us to take 
+In this example, we're _destructuring_ the props argument in this function, which
+will have `title`, `posterSrc`, and `genres` as keys. Destructuring allows us to take
 the keys from the props object and assign them to variables with the same name. That
 way, in our JSX, we don't have to use `props.whatever` everywhere - we can just access
 the value directly!
 
-## Default values for props
+Another benefit of destructuring props is that it makes it easier to tell what
+props a component expects to be passed down from its parent. Consider these two
+versions of the same component:
+
+```js
+// Without Destructuring
+function MovieCard(props) {
+  return (
+    <div className="movie-card">
+      <img src={props.posterSrc} alt={props.title} />
+      <h2>{props.title}</h2>
+      <small>{props.genres.join(", ")}</small>
+    </div>
+  );
+}
+
+// With Destructuring
+function MovieCard({ title, posterSrc, genres }) {
+  return (
+    <div className="movie-card">
+      <img src={posterSrc} alt={title} />
+      <h2>{title}</h2>
+      <small>{genres.join(", ")}</small>
+    </div>
+  );
+}
+```
+
+Looking at the version without destructuring, we'd have to find all the places
+where `props` is referenced in the component to determine what props this
+component expects. Looking at the version with destructuring, all we have to do
+is examine the function parameters and we can see exactly what props the
+component expects!
+
+### Destructuring Nested Objects
+
+We can also do some more advanced destructuring in cases when our props also
+contain nested objects. For example:
+
+```js
+function App() {
+  const socialLinks = {
+    github: "https://github.com/liza",
+    linkedin: "https://www.linkedin.com/in/liza/",
+  };
+
+  return (
+    <div>
+      <SocialMedia links={socialLinks} />
+    </div>
+  );
+}
+
+function SocialMedia({ socialLinks }) {
+  return (
+    <div>
+      <a href={socialLinks.github}>{socialLinks.github}</a>
+      <a href={socialLinks.linkedin}>{socialLinks.linkedin}</a>
+    </div>
+  );
+}
+```
+
+Since `socialLinks` is an object, we can also destructure it to make our JSX
+cleaner, either by destructuring in the body of the function:
+
+```js
+function SocialMedia({ socialLinks }) {
+  const { github, linkedin } = socialLinks;
+
+  return (
+    <div>
+      <a href={github}>{github}</a>
+      <a href={linkedin}>{linkedin}</a>
+    </div>
+  );
+}
+```
+
+...or by destructuring further in the parameters to our function:
+
+```js
+function SocialMedia({ socialLinks: { github, linkedin } }) {
+  return (
+    <div>
+      <a href={github}>{github}</a>
+      <a href={linkedin}>{linkedin}</a>
+    </div>
+  );
+}
+```
+
+How much destructuring you do, and where you do it, is very much a matter of
+preference. Try it out in some components and see what looks right to you!
+
+## Default Values for Props
 
 Let's switch gears here and imagine we are using our application to render a
 list of hundreds of movies. Let's also assume the data set we have is not always
-reliable when it comes to the urls of the movie posters. 
+reliable when it comes to the urls of the movie posters.
 
 In this case, we want to make sure our component doesn't render as an utter
 disaster when the data is incomplete. In order to do this, we can use a
@@ -131,18 +227,22 @@ default, seeing as it is a perfect placeholder:
 
 Instead of passing in that default poster image in case we don't have one, we
 can tell our `MovieCard` component to use a default value **if the `poster` prop
-was not provided**. To do this, we can add default value to our destructured 
+was not provided**. To do this, we can add default value to our destructured
 props:
 
 ```js
-function MovieCard({ title, posterSrc = 'http://i.imgur.com/bJw8ndW.png', genres }) {
+function MovieCard({
+  title,
+  posterSrc = "http://i.imgur.com/bJw8ndW.png",
+  genres,
+}) {
   return (
     <div className="movie-card">
       <img src={posterSrc} alt={title} />
       <h2>{title}</h2>
-      <small>{genres.join(', ')}</small>
+      <small>{genres.join(", ")}</small>
     </div>
-  )
+  );
 }
 ```
 
@@ -151,13 +251,12 @@ Now, whenever we omit the `posterSrc` prop, or if it's undefined, the
 have to worry about not passing in a poster all the time — the component will
 take care of this for us!
 
-
-## Why Use Default Values
+### Why Use Default Values
 
 An alternative way we could have handled bad urls would be to have `MovieCard`'s
 parent component _check_ whether the `posterSrc` was valid/present, and then
 pass some control value as a prop when it renders `MovieCard`. This is not ideal
-compared to using a default prop within the `MovieCard` component. 
+compared to using a default prop within the `MovieCard` component.
 
 Consider the following: in React, we want components to encapsulate the
 functionality that they _can and should be responsible for_. Should the parent
@@ -167,7 +266,9 @@ the component that is responsible for rendering the movie information and poster
 to handle missing data.
 
 ## Resources
-- [Destructuring Objects][destructuring]
+
+- [MDN on Object Destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment#Object_destructuring)
+- [Destructuring Objects blog post][destructuring]
 
 <p class='util--hide'>View <a href='https://learn.co/lessons/react-props-readme'>Props</a> on Learn.co and start learning to code for free.</p>
 
