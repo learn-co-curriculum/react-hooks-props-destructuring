@@ -31,7 +31,7 @@ data vs. dynamic _prop_ data:
 function MovieCard {
   return (
     <div className="movie-card">
-      <img src="http://image.tmdb.org/t/p/w342/kqjL17yufvn9OVLyXYpvtyrFfak.jpg" alt="Mad Max: Fury Road" />
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTn1OTYGz2GDC1XjA9tirh_1Rd571yE5UFIYsmZp4nACMd7CCHM" alt="Mad Max: Fury Road" />
       <h2>Mad Max: Fury Road</h2>
       <small>Genres: Action, Adventure, Science Fiction, Thriller</small>
     </div>
@@ -71,7 +71,7 @@ Armed with that knowledge, let's update `MovieCard`s render method to make use o
 function App() {
   const title = "Mad Max";
   const posterURL =
-    "http://image.tmdb.org/t/p/w342/kqjL17yufvn9OVLyXYpvtyrFfak.jpg";
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTn1OTYGz2GDC1XjA9tirh_1Rd571yE5UFIYsmZp4nACMd7CCHM";
   const genresArr = ["Action", "Adventure", "Science Fiction", "Thriller"];
 
   return (
@@ -241,7 +241,7 @@ props:
 ```js
 function MovieCard({
   title,
-  posterSrc = "http://i.imgur.com/bJw8ndW.png",
+  posterSrc = "https://m.media-amazon.com/images/M/MV5BOTJjNzczMTUtNzc5MC00ODk0LWEwYjgtNzdiOTEyZmQxNzhmXkEyXkFqcGdeQXVyNzMzMjU5NDY@._V1_UY268_CR1,0,182,268_AL_.jpg",
   genres,
 }) {
   return (
