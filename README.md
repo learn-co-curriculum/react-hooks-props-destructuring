@@ -22,10 +22,10 @@ opportunity to make our components more dynamic, and a **lot more** reusable.
 
 For example, say we have a `<MovieCard />` component. A movie has a title, a
 poster image, and many other attributes (or **prop**-erties!). Let's examine
-what this `<MovieCard />` component would look like with _hardcoded_ data vs.
-dynamic _prop_ data:
+what this `<MovieCard />` component would look like with hardcoded, _static_
+data vs. dynamic _prop_ data:
 
-###### Hardcoded:
+###### Hardcoded with Static Data:
 
 ```js
 function MovieCard {
@@ -46,7 +46,8 @@ movie card for another movie? Do we just write another component? No, that would
 be silly! Instead, we write our components so that they make use of props, which
 are passed from their parents.
 
-To pass props to a component, you add them as attributes when you render them:
+To pass props to a component, you add them as attributes when you render them,
+just like adding attributes to a HTML element:
 
 ```js
 const movieTitle = "Mad Max"
@@ -66,15 +67,22 @@ Armed with that knowledge, let's update `MovieCard`s render method to make use o
 ###### Dynamic with Props:
 
 ```js
-// assuming we are rendering a MovieCard component with the following JSX:
-const title = "Mad Max"
-const posterURL = "http://image.tmdb.org/t/p/w342/kqjL17yufvn9OVLyXYpvtyrFfak.jpg"
-const genresArr = ["Action", "Adventure", "Science Fiction", "Thriller"]
+// parent component
+function App() {
+  const title = "Mad Max";
+  const posterURL =
+    "http://image.tmdb.org/t/p/w342/kqjL17yufvn9OVLyXYpvtyrFfak.jpg";
+  const genresArr = ["Action", "Adventure", "Science Fiction", "Thriller"];
 
-<MovieCard title={title} posterSrc={posterURL} genres={genresArr} />
-```
+  return (
+    <div className="App">
+      {/* passing down props from the parent component */}
+      <MovieCard title={title} posterSrc={posterURL} genres={genresArr} />
+    </div>
+  );
+}
 
-```js
+// child component
 function MovieCard(props) {
   return (
     <div className="movie-card">
@@ -146,7 +154,7 @@ Looking at the version without destructuring, we'd have to find all the places
 where `props` is referenced in the component to determine what props this
 component expects. Looking at the version with destructuring, all we have to do
 is examine the function parameters and we can see exactly what props the
-component expects!
+component needs!
 
 ### Destructuring Nested Objects
 
@@ -207,7 +215,7 @@ function SocialMedia({ socialLinks: { github, linkedin } }) {
 ```
 
 How much destructuring you do, and where you do it, is very much a matter of
-preference. Try it out in some components and see what looks right to you!
+preference. Try it out in some components and see what feels right to you!
 
 ## Default Values for Props
 
@@ -226,8 +234,8 @@ default, seeing as it is a perfect placeholder:
 </P>
 
 Instead of passing in that default poster image in case we don't have one, we
-can tell our `MovieCard` component to use a default value **if the `poster` prop
-was not provided**. To do this, we can add default value to our destructured
+can tell our `MovieCard` component to use a **default value** if the `posterSrc`
+prop was not provided. To do this, we can add default value to our destructured
 props:
 
 ```js
@@ -251,6 +259,24 @@ Now, whenever we omit the `posterSrc` prop, or if it's undefined, the
 have to worry about not passing in a poster all the time — the component will
 take care of this for us!
 
+For example, this version of our component would still display its default
+image, even though we aren't passing a prop of `posterSrc` from the parent
+component:
+
+```js
+function App() {
+  const title = "Mad Max";
+  const genresArr = ["Action", "Adventure", "Science Fiction", "Thriller"];
+
+  return (
+    <div className="App">
+      {/* posterSrc is omitted, so the default value will be used instead */}
+      <MovieCard title={title} genres={genresArr} />
+    </div>
+  );
+}
+```
+
 ### Why Use Default Values
 
 An alternative way we could have handled bad urls would be to have `MovieCard`'s
@@ -264,6 +290,19 @@ component of `MovieCard` be responsible for managing the assignment of a default
 movie poster source value? In our example, we think not. It makes more sense for
 the component that is responsible for rendering the movie information and poster
 to handle missing data.
+
+## Summary
+
+By using **destructuring** in our components, we can make the returned JSX
+elements easier to read, because we don't need to reference `props.whatever`
+everywhere. Destructuring also makes it easier to tell what props a component
+expects, since we can just look at the destructured parameters instead of
+reading through the whole component and looking for references to the props
+object.
+
+When we use destructuring, we can provide a **default value** for any prop keys
+we want, so that if the component doesn't receive those props from its parents,
+we can still render some default information.
 
 ## Resources
 
