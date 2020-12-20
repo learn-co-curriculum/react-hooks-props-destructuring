@@ -25,9 +25,9 @@ poster image, and many other attributes (or **prop**-erties!). Let's examine
 what this `<MovieCard />` component would look like with hardcoded, _static_
 data vs. dynamic _prop_ data:
 
-###### Hardcoded with Static Data:
+**Hardcoded with Static Data**:
 
-```js
+```jsx
 function MovieCard {
   return (
     <div className="movie-card">
@@ -49,7 +49,7 @@ are passed from their parents.
 To pass props to a component, you add them as attributes when you render them,
 just like adding attributes to a HTML element:
 
-```js
+```jsx
 const movieTitle = "Mad Max"
 <MovieCard title={movieTitle} />
 ```
@@ -64,9 +64,9 @@ value is a hardcoded string, you can pass it in through double quotes instead:
 
 Armed with that knowledge, let's update `MovieCard`s render method to make use of props:
 
-###### Dynamic with Props:
+**Dynamic with Props**:
 
-```js
+```jsx
 // parent component
 function App() {
   const title = "Mad Max";
@@ -126,7 +126,7 @@ Another benefit of destructuring props is that it makes it easier to tell what
 props a component expects to be passed down from its parent. Consider these two
 versions of the same component:
 
-```js
+```jsx
 // Without Destructuring
 function MovieCard(props) {
   return (
@@ -161,7 +161,7 @@ component needs!
 We can also do some more advanced destructuring in cases when our props also
 contain nested objects. For example:
 
-```js
+```jsx
 function App() {
   const socialLinks = {
     github: "https://github.com/liza",
@@ -188,7 +188,7 @@ function SocialMedia({ socialLinks }) {
 Since `socialLinks` is an object, we can also destructure it to make our JSX
 cleaner, either by destructuring in the body of the function:
 
-```js
+```jsx
 function SocialMedia({ socialLinks }) {
   const { github, linkedin } = socialLinks;
 
@@ -203,7 +203,7 @@ function SocialMedia({ socialLinks }) {
 
 ...or by destructuring further in the parameters to our function:
 
-```js
+```jsx
 function SocialMedia({ socialLinks: { github, linkedin } }) {
   return (
     <div>
@@ -229,20 +229,18 @@ disaster when the data is incomplete. In order to do this, we can use a
 is provided. For this example, let's use the poster for Max Headroom as a
 default, seeing as it is a perfect placeholder:
 
-<p align="center">
-  <img src="https://m.media-amazon.com/images/M/MV5BOTJjNzczMTUtNzc5MC00ODk0LWEwYjgtNzdiOTEyZmQxNzhmXkEyXkFqcGdeQXVyNzMzMjU5NDY@._V1_UY268_CR1,0,182,268_AL_.jpg" />
-</P>
+![max headroom poster](https://m.media-amazon.com/images/M/MV5BOTJjNzczMTUtNzc5MC00ODk0LWEwYjgtNzdiOTEyZmQxNzhmXkEyXkFqcGdeQXVyNzMzMjU5NDY@._V1_UY268_CR1,0,182,268_AL_.jpg)
 
 Instead of passing in that default poster image in case we don't have one, we
 can tell our `MovieCard` component to use a **default value** if the `posterSrc`
 prop was not provided. To do this, we can add default value to our destructured
 props:
 
-```js
+```jsx
 function MovieCard({
   title,
-  posterSrc = "https://m.media-amazon.com/images/M/MV5BOTJjNzczMTUtNzc5MC00ODk0LWEwYjgtNzdiOTEyZmQxNzhmXkEyXkFqcGdeQXVyNzMzMjU5NDY@._V1_UY268_CR1,0,182,268_AL_.jpg",
   genres,
+  posterSrc = "https://m.media-amazon.com/images/M/MV5BOTJjNzczMTUtNzc5MC00ODk0LWEwYjgtNzdiOTEyZmQxNzhmXkEyXkFqcGdeQXVyNzMzMjU5NDY@._V1_UY268_CR1,0,182,268_AL_.jpg",
 }) {
   return (
     <div className="movie-card">
@@ -254,7 +252,7 @@ function MovieCard({
 }
 ```
 
-Now, whenever we omit the `posterSrc` prop, or if it's undefined, the
+Now, whenever we omit the `posterSrc` prop, or if it's `undefined`, the
 `MovieCard` component will use this default value instead. That means we don't
 have to worry about not passing in a poster all the time — the component will
 take care of this for us!
@@ -308,7 +306,5 @@ we can still render some default information.
 
 - [MDN on Object Destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment#Object_destructuring)
 - [Destructuring Objects blog post][destructuring]
-
-<p class='util--hide'>View <a href='https://learn.co/lessons/react-props-readme'>Props</a> on Learn.co and start learning to code for free.</p>
 
 [destructuring]: https://ui.dev/object-array-destructuring/
