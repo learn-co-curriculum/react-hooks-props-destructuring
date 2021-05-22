@@ -1,18 +1,15 @@
 # Props Destructuring and Default Values
 
+## Learning Goals
+
+- Use destructuring to access props more easily
+- Declare default values for destructured props
+
 ## Overview
 
 We'll cover props in further detail and explore how they help us make our
 components more dynamic and reusable. We'll also talk about _destructuring_ and
 how to give our props _default values_.
-
-## Objectives
-
-1. Explain how props make our components more dynamic and reusable
-2. Pass props to a component by adding them as attributes when you render them
-3. Use destructuring to access props more easily
-4. Declare default values for destructured props
-5. Render a component with props and default props
 
 ## Reviewing What We Know
 
@@ -23,19 +20,20 @@ opportunity to make our components more dynamic, and a **lot more** reusable.
 For example, say we have a `<MovieCard />` component. A movie has a title, a
 poster image, and many other attributes (or **prop**-erties!). Let's examine
 what this `<MovieCard />` component would look like with hardcoded, _static_
-data vs. dynamic _prop_ data:
+data vs. dynamic _prop_ data. Here's the **static, hard-coded version**:
 
-**Hardcoded with Static Data**:
-
-```jsx
-function MovieCard {
+```js
+function MovieCard() {
   return (
     <div className="movie-card">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTn1OTYGz2GDC1XjA9tirh_1Rd571yE5UFIYsmZp4nACMd7CCHM" alt="Mad Max: Fury Road" />
+      <img
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTn1OTYGz2GDC1XjA9tirh_1Rd571yE5UFIYsmZp4nACMd7CCHM"
+        alt="Mad Max: Fury Road"
+      />
       <h2>Mad Max: Fury Road</h2>
       <small>Genres: Action, Adventure, Science Fiction, Thriller</small>
     </div>
-  )
+  );
 }
 ```
 
@@ -49,7 +47,7 @@ are passed from their parents.
 To pass props to a component, you add them as attributes when you render them,
 just like adding attributes to a HTML element:
 
-```jsx
+```js
 const movieTitle = "Mad Max"
 <MovieCard title={movieTitle} />
 ```
@@ -62,11 +60,10 @@ value is a hardcoded string, you can pass it in through double quotes instead:
 <MovieCard title="Mad Max" />
 ```
 
-Armed with that knowledge, let's update `MovieCard`s render method to make use of props:
+Armed with that knowledge, let's update `MovieCard`s render method to make use
+of props and make it **dynamic**:
 
-**Dynamic with Props**:
-
-```jsx
+```js
 // parent component
 function App() {
   const title = "Mad Max";
@@ -99,12 +96,12 @@ example or what!?
 
 ## Destructuring Props
 
-Since we know that a React function will only every get called with one argument,
-and that argument will be the **props** object, we can take advantage of a modern
-JavaScript feature called [destructuring][destructuring] to make our component even
-cleaner:
+Since we know that a React function will only every get called with one
+argument, and that argument will be the **props** object, we can take advantage
+of a modern JavaScript feature called [**destructuring**][destructuring] to make
+our component even cleaner:
 
-```jsx
+```js
 function MovieCard({ title, posterSrc, genres }) {
   return (
     <div className="movie-card">
@@ -116,17 +113,17 @@ function MovieCard({ title, posterSrc, genres }) {
 }
 ```
 
-In this example, we're _destructuring_ the props argument in this function, which
-will have `title`, `posterSrc`, and `genres` as keys. Destructuring allows us to take
-the keys from the props object and assign them to variables with the same name. That
-way, in our JSX, we don't have to use `props.whatever` everywhere - we can just access
-the value directly!
+In this example, we're **destructuring** the `props` object in the parameter in
+this function, which will have `title`, `posterSrc`, and `genres` as keys.
+Destructuring allows us to take the **keys from the props object** and assign
+them to **variables with the same name**. That way, in our JSX, we don't have to
+use `props.whatever` everywhere &mdash; we can just access the value directly!
 
 Another benefit of destructuring props is that it makes it easier to tell what
 props a component expects to be passed down from its parent. Consider these two
 versions of the same component:
 
-```jsx
+```js
 // Without Destructuring
 function MovieCard(props) {
   return (
@@ -154,14 +151,14 @@ Looking at the version without destructuring, we'd have to find all the places
 where `props` is referenced in the component to determine what props this
 component expects. Looking at the version with destructuring, all we have to do
 is examine the function parameters and we can see exactly what props the
-component needs!
+component needs.
 
 ### Destructuring Nested Objects
 
 We can also do some more advanced destructuring in cases when our props also
 contain nested objects. For example:
 
-```jsx
+```js
 function App() {
   const socialLinks = {
     github: "https://github.com/liza",
@@ -254,8 +251,8 @@ function MovieCard({
 
 Now, whenever we omit the `posterSrc` prop, or if it's `undefined`, the
 `MovieCard` component will use this default value instead. That means we don't
-have to worry about not passing in a poster all the time — the component will
-take care of this for us!
+have to worry about not passing in a poster all the time &mdash; the component
+will take care of this for us!
 
 For example, this version of our component would still display its default
 image, even though we aren't passing a prop of `posterSrc` from the parent
@@ -289,14 +286,15 @@ movie poster source value? In our example, we think not. It makes more sense for
 the component that is responsible for rendering the movie information and poster
 to handle missing data.
 
-## Summary
+## Conclusion
 
 By using **destructuring** in our components, we can make the returned JSX
 elements easier to read, because we don't need to reference `props.whatever`
-everywhere. Destructuring also makes it easier to tell what props a component
-expects, since we can just look at the destructured parameters instead of
-reading through the whole component and looking for references to the props
-object.
+everywhere.
+
+Destructuring also makes it easier to tell what props a component expects, since
+we can just look at the destructured parameters instead of reading through the
+whole component and looking for references to the props object.
 
 When we use destructuring, we can provide a **default value** for any prop keys
 we want, so that if the component doesn't receive those props from its parents,
