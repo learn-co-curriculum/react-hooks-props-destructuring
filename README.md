@@ -117,7 +117,7 @@ In this example, we're **destructuring** the `props` object in the parameter in
 this function, which will have `title`, `posterSrc`, and `genres` as keys.
 Destructuring allows us to take the **keys from the props object** and assign
 them to **variables with the same name**. That way, in our JSX, we don't have to
-use `props.whatever` everywhere &mdash; we can just access the value directly!
+use `props.whatever` everywhere — we can just access the value directly!
 
 Another benefit of destructuring props is that it makes it easier to tell what
 props a component expects to be passed down from its parent. Consider these two
@@ -251,7 +251,7 @@ function MovieCard({
 
 Now, whenever we omit the `posterSrc` prop, or if it's `undefined`, the
 `MovieCard` component will use this default value instead. That means we don't
-have to worry about not passing in a poster all the time &mdash; the component
+have to worry about not passing in a poster all the time — the component
 will take care of this for us!
 
 For example, this version of our component would still display its default
