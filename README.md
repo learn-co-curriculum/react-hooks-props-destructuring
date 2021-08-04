@@ -22,7 +22,7 @@ poster image, and many other attributes (or **prop**-erties!). Let's examine
 what this `<MovieCard />` component would look like with hardcoded, _static_
 data vs. dynamic _prop_ data. Here's the **static, hard-coded version**:
 
-```js
+```jsx
 function MovieCard() {
   return (
     <div className="movie-card">
@@ -47,7 +47,7 @@ are passed from their parents.
 To pass props to a component, you add them as attributes when you render them,
 just like adding attributes to a HTML element:
 
-```js
+```jsx
 const movieTitle = "Mad Max"
 <MovieCard title={movieTitle} />
 ```
@@ -56,14 +56,14 @@ The value of a prop is passed in through JSX curly braces. As we read before,
 this value can be anything: a variable, inline values, functions, etc. If your
 value is a hardcoded string, you can pass it in through double quotes instead:
 
-```js
+```jsx
 <MovieCard title="Mad Max" />
 ```
 
 Armed with that knowledge, let's update `MovieCard`s render method to make use
 of props and make it **dynamic**:
 
-```js
+```jsx
 // parent component
 function App() {
   const title = "Mad Max";
@@ -101,7 +101,7 @@ argument, and that argument will be the **props** object, we can take advantage
 of a modern JavaScript feature called [**destructuring**][destructuring] to make
 our component even cleaner:
 
-```js
+```jsx
 function MovieCard({ title, posterSrc, genres }) {
   return (
     <div className="movie-card">
@@ -123,7 +123,7 @@ Another benefit of destructuring props is that it makes it easier to tell what
 props a component expects to be passed down from its parent. Consider these two
 versions of the same component:
 
-```js
+```jsx
 // Without Destructuring
 function MovieCard(props) {
   return (
@@ -158,7 +158,7 @@ component needs.
 We can also do some more advanced destructuring in cases when our props also
 contain nested objects. For example:
 
-```js
+```jsx
 function App() {
   const socialLinks = {
     github: "https://github.com/liza",
@@ -258,7 +258,7 @@ For example, this version of our component would still display its default
 image, even though we aren't passing a prop of `posterSrc` from the parent
 component:
 
-```js
+```jsx
 function App() {
   const title = "Mad Max";
   const genresArr = ["Action", "Adventure", "Science Fiction", "Thriller"];
