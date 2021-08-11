@@ -5,11 +5,11 @@
 - Use destructuring to access props more easily
 - Declare default values for destructured props
 
-## Overview
+## Introduction
 
-We'll cover props in further detail and explore how they help us make our
-components more dynamic and reusable. We'll also talk about _destructuring_ and
-how to give our props _default values_.
+In this lesson, we'll cover props in further detail and explore how they help us
+make our components more dynamic and reusable. We'll also talk about
+_destructuring_ and how to give our props _default values_.
 
 ## Reviewing What We Know
 
@@ -44,24 +44,24 @@ movie card for another movie? Do we just write another component? No, that would
 be silly! Instead, we write our components so that they make use of props, which
 are passed from their parents.
 
-To pass props to a component, you add them as attributes when you render them,
-just like adding attributes to a HTML element:
+To pass props to a component, you add them as attributes when you render the
+component, just like adding attributes to an HTML element:
 
 ```jsx
 const movieTitle = "Mad Max"
 <MovieCard title={movieTitle} />
 ```
 
-The value of a prop is passed in through JSX curly braces. As we read before,
-this value can be anything: a variable, inline values, functions, etc. If your
-value is a hardcoded string, you can pass it in through double quotes instead:
+The value of the prop is enclosed in JSX curly braces. As we read before, this
+value can be anything: a variable, inline values, functions, etc. If your value
+is a hard-coded string, however, you can enclose it in double quotes instead:
 
 ```jsx
 <MovieCard title="Mad Max" />
 ```
 
-Armed with that knowledge, let's update `MovieCard`s render method to make use
-of props and make it **dynamic**:
+Armed with that knowledge, let's update `MovieCard` to make it **dynamic** by
+using props:
 
 ```jsx
 // parent component
@@ -91,15 +91,15 @@ function MovieCard(props) {
 }
 ```
 
-Now, does that not look cleaner and more reusable compared to our hard coded
-example or what!?
+Now, does that not look cleaner and more reusable compared to the hard-coded
+version?
 
 ## Destructuring Props
 
-Since we know that a React function will only every get called with one
-argument, and that argument will be the **props** object, we can take advantage
-of a modern JavaScript feature called [**destructuring**][destructuring] to make
-our component even cleaner:
+Since we know that a React function will only ever get called with one argument,
+and that argument will be the **props** object, we can take advantage of a
+modern JavaScript feature called [**destructuring**][destructuring] to make our
+component even cleaner:
 
 ```jsx
 function MovieCard({ title, posterSrc, genres }) {
@@ -116,7 +116,7 @@ function MovieCard({ title, posterSrc, genres }) {
 In this example, we're **destructuring** the `props` object in the parameter in
 this function, which will have `title`, `posterSrc`, and `genres` as keys.
 Destructuring allows us to take the **keys from the props object** and assign
-them to **variables with the same name**. That way, in our JSX, we don't have to
+them to **variables with the same names**. That way, in our JSX, we don't have to
 use `props.whatever` everywhere — we can just access the value directly!
 
 Another benefit of destructuring props is that it makes it easier to tell what
@@ -230,8 +230,8 @@ default, seeing as it is a perfect placeholder:
 
 Instead of passing in that default poster image in case we don't have one, we
 can tell our `MovieCard` component to use a **default value** if the `posterSrc`
-prop was not provided. To do this, we can add default value to our destructured
-props:
+prop was not provided. To do this, we can add the default value to our
+destructured props:
 
 ```jsx
 function MovieCard({
